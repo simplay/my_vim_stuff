@@ -41,6 +41,9 @@ set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=%*
 
+let g:vim_tags_auto_generate = 1
+let g:vim_tags_use_language_field = 1
+
 "hl_matchit
 "" If this variable is set, augroup is defined, and start highlighting.
 let g:hl_matchit_enable_on_vim_startup = 1
@@ -115,6 +118,7 @@ Plug 'osyo-manga/vim-monster'
 Plug 'Shougo/neocomplete.vim'
 Plug 'vimtaku/hl_matchit.vim'
 Plug 'https://github.com/907th/vim-auto-save.git'
+Plug 'szw/vim-tags'
 call plug#end()
 
 
@@ -374,3 +378,4 @@ endif
 " For perlomni.vim setting.
 " https://github.com/c9s/perlomni.vim
 let g:neocomplete#sources#omni#input_patterns.perl = '\h\w*->\h\w*\|\h\w*::' 
+let g:neocomplete#sources#omni#input_patterns.ruby = '[^. *\t]\.\w*\|\h\w*::' 
