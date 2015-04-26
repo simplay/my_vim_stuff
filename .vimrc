@@ -295,6 +295,7 @@ execute WatchForChanges("*",autoreadargs)
 "*************************************************************************"
 "neocomplete"
 "*************************************************************************"
+
 "Note: This option must set it in .vimrc(_vimrc).  NOT IN .gvimrc(_gvimrc)!
 " Disable AutoComplPop.
 let g:acp_enableAtStartup = 0
@@ -366,6 +367,7 @@ autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
 autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
 autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
 autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
+autocmd FileType ruby setlocal omnifunc=rubycomplete#Complete
 
 " Enable heavy omni completion.
 if !exists('g:neocomplete#sources#omni#input_patterns')
@@ -377,5 +379,6 @@ endif
 
 " For perlomni.vim setting.
 " https://github.com/c9s/perlomni.vim
-let g:neocomplete#sources#omni#input_patterns.perl = '\h\w*->\h\w*\|\h\w*::' 
-let g:neocomplete#sources#omni#input_patterns.ruby = '[^. *\t]\.\w*\|\h\w*::' 
+let g:neocomplete#sources#omni#input_patterns.c = '[^.[:digit:] *\t]\%(\.\|->\)'
+let g:neocomplete#sources#omni#input_patterns.cpp = '[^.[:digit:] *\t]\%(\.\|->\)\|\h\w*::'
+let g:neocomplete#sources#omni#input_patterns.ruby = '[^. *\t]\.\h\w*\|\h\w*:'
