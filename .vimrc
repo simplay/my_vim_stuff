@@ -29,6 +29,10 @@ map <leader>b :Gblame <CR>
 map <leader>r :edit! <CR>
 map <leader>F gg=G
 map <leader>e :Explore <CR> 
+
+" Browse Tags in current buffer
+map <leader>t :CtrlPBufTag<CR>
+
 " solarized options 
 let g:solarized_termcolors=256
 colorscheme solarized
@@ -119,6 +123,7 @@ Plug 'Shougo/neocomplete.vim'
 Plug 'vimtaku/hl_matchit.vim'
 Plug 'https://github.com/907th/vim-auto-save.git'
 Plug 'szw/vim-tags'
+Plug 'ludovicchabant/vim-gutentags'
 call plug#end()
 
 
