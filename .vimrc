@@ -45,6 +45,13 @@ set statusline+=%*
 let g:vim_tags_auto_generate = 1
 let g:vim_tags_use_language_field = 1
 
+" Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
+let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
+" ag is fast enough that CtrlP doesn't need to cache
+let g:ctrlp_use_caching = 0
+
+
+
 "hl_matchit
 "" If this variable is set, augroup is defined, and start highlighting.
 let g:hl_matchit_enable_on_vim_startup = 1
@@ -74,6 +81,9 @@ let autoreadargs={'autoread':1}
 let g:ctrlp_map = '<c-p>'
 let g:ctrlp_cmd = 'CtrlP'
 let g:ctrlp_working_path_mode = 'ra'
+
+let g:ctrlp_match_func = { 'match': 'pymatcher#PyMatch' }
+
 set wildignore+=*/tmp/*,*.so,*.swp,*.zip     " MacOSX/Linux
 set wildignore+=*\\tmp\\*,*.swp,*.zip,*.exe  " Windows
 
@@ -124,6 +134,7 @@ Plug 'vimtaku/hl_matchit.vim'
 Plug 'https://github.com/907th/vim-auto-save.git'
 Plug 'szw/vim-tags'
 Plug 'ludovicchabant/vim-gutentags'
+Plug 'FelikZ/ctrlp-py-matcher'
 call plug#end()
 
 
