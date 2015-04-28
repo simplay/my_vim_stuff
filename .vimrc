@@ -10,6 +10,7 @@ setl autoread "  Vim automatically refresh any unchanged files
 set incsearch
 set showmatch
 set ignorecase
+set smartcase
 set hlsearch
 
 runtime macros/matchit.vim
