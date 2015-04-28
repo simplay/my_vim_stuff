@@ -6,8 +6,6 @@ set noswapfile
 set laststatus=2
 set ruler 
 set nostartofline
-
-autocmd FileType ruby compiler ruby
 setl autoread "  Vim automatically refresh any unchanged files 
 set incsearch
 set showmatch
@@ -16,8 +14,6 @@ set hlsearch
 
 runtime macros/matchit.vim
 
-au FocusLost * :wa
-au FileChangedShell * :e! 
 let g:auto_save = 1  " enable AutoSave on Vim startup
 let g:auto_save_in_insert_mode = 0  " do not save while in insert mode
 
@@ -87,14 +83,17 @@ runtime! macros/matchit.vim
 
 augroup myfiletypes
  " Clear old autocmds in group
+au FocusLost * :wa
+au FileChangedShell * :e! 
+autocmd FileType ruby compiler ruby
+au FocusGained,BufEnter * :silent! !
+au FocusLost,WinLeave * :silent! w
  autocmd!
  autocmd BufWritePost $MYVIMRC source $MYVIMRC
  " autoindent with two spaces, always expand tabs
  autocmd FileType ruby,eruby,yaml set ai sw=2 sts=2 et
 augroup END
 
-au FocusGained,BufEnter * :silent! !
-au FocusLost,WinLeave * :silent! w
 
 map! jk <Esc> " map ii to Esc
 
@@ -387,3 +386,4 @@ endif
 let g:neocomplete#sources#omni#input_patterns.c = '[^.[:digit:] *\t]\%(\.\|->\)'
 let g:neocomplete#sources#omni#input_patterns.cpp = '[^.[:digit:] *\t]\%(\.\|->\)\|\h\w*::'
 let g:neocomplete#sources#omni#input_patterns.ruby = '[^. *\t]\.\h\w*\|\h\w*:'
+set nostartofline
