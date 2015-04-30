@@ -1,3 +1,31 @@
+call plug#begin('~/.vim/plugged')
+
+" On-demand loading
+Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
+
+"MY PLUGIN LIST"
+Plug 'tpope/vim-sensible'
+Plug 'altercation/vim-colors-solarized'
+Plug 'scrooloose/syntastic'
+Plug 'tpope/vim-fugitive'
+Plug 'kien/ctrlp.vim'
+Plug 'tpope/vim-surround'
+Plug 'Raimondi/delimitMate'
+Plug 'vim-ruby/vim-ruby'
+Plug 'tpope/vim-rails'
+Plug 'chriseppstein/vim-haml'
+Plug 'tpope/vim-endwise'
+Plug 'osyo-manga/vim-monster'
+Plug 'Shougo/neocomplete.vim'
+Plug 'vimtaku/hl_matchit.vim'
+Plug 'https://github.com/907th/vim-auto-save.git'
+Plug 'szw/vim-tags'
+Plug 'ludovicchabant/vim-gutentags'
+Plug 'FelikZ/ctrlp-py-matcher'
+Plug 'SirVer/ultisnips'
+Plug 'honza/vim-snippets'
+call plug#end()
+
 set nocompatible          " We're running Vim, not Vi!
 syntax on                 " Enable syntax highlighting
 filetype plugin indent on " Enable filetype-specific indenting and plugins
@@ -6,7 +34,7 @@ set noswapfile
 set laststatus=2
 set ruler 
 set nostartofline
-setl autoread "  Vim automatically refresh any unchanged files 
+set autoread "  Vim automatically refresh any unchanged files 
 set incsearch
 set showmatch
 set ignorecase
@@ -14,7 +42,6 @@ set smartcase
 set hlsearch
 
 runtime macros/matchit.vim
-
 let g:auto_save = 1  " enable AutoSave on Vim startup
 let g:auto_save_in_insert_mode = 0  " do not save while in insert mode
 
@@ -26,6 +53,12 @@ map <leader>b :Gblame <CR>
 map <leader>r :edit! <CR>
 map <leader>F gg=G
 map <leader>e :Explore <CR> 
+nnoremap <tab>   <c-w>w
+nnoremap <S-tab> <c-w>W
+
+let g:syntastic_quiet_messages = {
+  \ "!level": "errors",
+  \ "type": "style" }
 
 " Browse Tags in current buffer
 map <leader>t :CtrlPBufTag<CR>
@@ -33,7 +66,7 @@ map <leader>t :CtrlPBufTag<CR>
 " solarized options 
 let g:solarized_termcolors=256
 colorscheme solarized
-set background=light
+set background=dark
 
 set statusline=%<%f\ %{fugitive#statusline()}\ %h%m%r%=%-14.(%l,%c%V%)\ %P
 
@@ -46,7 +79,7 @@ let g:vim_tags_auto_generate = 1
 let g:vim_tags_use_language_field = 1
 
 " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
-let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
+let g:ctrlp_user_command = 'ag %s -l --nocolor --ignore ".git" --ignore "doc" --ignore "app/assets/images" --ignore "public" -g ""'
 " ag is fast enough that CtrlP doesn't need to cache
 let g:ctrlp_use_caching = 0
 
@@ -93,16 +126,21 @@ set wildignore+=*\\tmp\\*,*.swp,*.zip,*.exe  " Windows
 runtime! macros/matchit.vim
 
 augroup myfiletypes
- " Clear old autocmds in group
-au FocusLost * :wa
-au FileChangedShell * :e! 
-autocmd FileType ruby compiler ruby
-au FocusGained,BufEnter * :silent! !
-au FocusLost,WinLeave * :silent! w
- autocmd!
- autocmd BufWritePost $MYVIMRC source $MYVIMRC
- " autoindent with two spaces, always expand tabs
- autocmd FileType ruby,eruby,yaml set ai sw=2 sts=2 et
+  " Clear old autocmds in group
+  au FocusLost * :wa
+  au FileChangedShell * :e! 
+  autocmd FileType ruby compiler ruby
+  au FocusGained,BufEnter * :silent! !
+  au FocusLost,WinLeave * :silent! w
+  autocmd!
+  " autoindent with two spaces, always expand tabs
+  autocmd FileType ruby,eruby,yaml set ai sw=2 sts=2 et
+autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
+autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
+autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
+autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
+autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
+autocmd FileType ruby setlocal omnifunc=rubycomplete#Complete
 augroup END
 
 
@@ -110,32 +148,6 @@ map! jk <Esc> " map ii to Esc
 
 "Latex Stuff
 filetype plugin on
-
-call plug#begin('~/.vim/plugged')
-
-" On-demand loading
-Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
-
-"MY PLUGIN LIST"
-Plug 'tpope/vim-sensible'
-Plug 'altercation/vim-colors-solarized'
-Plug 'scrooloose/syntastic'
-Plug 'tpope/vim-fugitive'
-Plug 'kien/ctrlp.vim'
-Plug 'tpope/vim-surround'
-Plug 'Raimondi/delimitMate'
-Plug 'vim-ruby/vim-ruby'
-Plug 'tpope/vim-rails'
-Plug 'chriseppstein/vim-haml'
-Plug 'tpope/vim-endwise'
-Plug 'osyo-manga/vim-monster'
-Plug 'Shougo/neocomplete.vim'
-Plug 'vimtaku/hl_matchit.vim'
-Plug 'https://github.com/907th/vim-auto-save.git'
-Plug 'szw/vim-tags'
-Plug 'ludovicchabant/vim-gutentags'
-Plug 'FelikZ/ctrlp-py-matcher'
-call plug#end()
 
 
 "*************************************************************************"
@@ -378,12 +390,6 @@ inoremap <expr><C-e>  neocomplete#cancel_popup()
 "inoremap <expr><TAB>  pumvisible() ? "\<Down>" : "\<C-x>\<C-u>"
 
 " Enable omni completion.
-autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
-autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
-autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
-autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
-autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
-autocmd FileType ruby setlocal omnifunc=rubycomplete#Complete
 
 " Enable heavy omni completion.
 if !exists('g:neocomplete#sources#omni#input_patterns')
