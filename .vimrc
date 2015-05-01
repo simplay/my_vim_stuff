@@ -19,11 +19,12 @@ Plug 'osyo-manga/vim-monster'
 Plug 'Shougo/neocomplete.vim'
 Plug 'vimtaku/hl_matchit.vim'
 Plug 'https://github.com/907th/vim-auto-save.git'
-Plug 'szw/vim-tags'
 Plug 'ludovicchabant/vim-gutentags'
 Plug 'FelikZ/ctrlp-py-matcher'
 Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
+Plug 'zenorocha/dracula-theme'
+Plug 'rking/ag.vim'
 call plug#end()
 
 set nocompatible          " We're running Vim, not Vi!
@@ -64,9 +65,11 @@ let g:syntastic_quiet_messages = {
 map <leader>t :CtrlPBufTag<CR>
 
 " solarized options 
-"let g:solarized_termcolors=256
-colorscheme solarized
-set background=dark
+let g:solarized_termcolors=256
+" colorscheme dracula-theme
+" color dracula-theme
+color Dracula
+" set background=dark
 
 set statusline=%<%f\ %{fugitive#statusline()}\ %h%m%r%=%-14.(%l,%c%V%)\ %P
 
@@ -75,8 +78,8 @@ set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=%*
 
-let g:vim_tags_auto_generate = 1
-let g:vim_tags_use_language_field = 1
+"let g:vim_tags_auto_generate = 1
+"let g:vim_tags_use_language_field = 1
 
 " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
 let g:ctrlp_user_command = 'ag %s -l --nocolor --ignore ".git" --ignore "doc" --ignore "app/assets/images" --ignore "public" -g ""'
