@@ -64,7 +64,7 @@ let g:syntastic_quiet_messages = {
 map <leader>t :CtrlPBufTag<CR>
 
 " solarized options 
-let g:solarized_termcolors=256
+"let g:solarized_termcolors=256
 colorscheme solarized
 set background=dark
 
