@@ -41,6 +41,7 @@ set showmatch
 set ignorecase
 set smartcase
 set hlsearch
+set backspace=indent,eol,start
 
 runtime macros/matchit.vim
 let g:auto_save = 1  " enable AutoSave on Vim startup
@@ -54,8 +55,12 @@ map <leader>b :Gblame <CR>
 map <leader>r :edit! <CR>
 map <leader>F gg=G
 map <leader>e :Explore <CR> 
+map <leader>H :e $MYVIMRC <CR>
+
+map <leader>C :%s/\s\+$// <CR>
 nnoremap <tab>   <c-w>w
 nnoremap <S-tab> <c-w>W
+"nnoremap <c-¨> <c-]>
 
 let g:syntastic_quiet_messages = {
   \ "!level": "errors",
