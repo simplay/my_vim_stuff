@@ -1,3 +1,5 @@
+
+
 call plug#begin('~/.vim/plugged')
 
 " On-demand loading
@@ -61,6 +63,17 @@ map <leader>C :%s/\s\+$// <CR>
 nnoremap <tab>   <c-w>w
 nnoremap <S-tab> <c-w>W
 "nnoremap <c-¨> <c-]>
+
+" <F1> pastes, but I have it configured so it works very well in insert mode 
+" and in normal mode. The nopaste setting makes sure that auto-indent 
+" doesn't go crazy when you try to paste something in. 
+" <F2> copies text. If you are in normal mode, it will just grab the line your
+" working on. If you in visual mode however, it will grab all the selected
+" text. 
+nmap <F1> :set paste<CR>:r !pbpaste<CR>:set nopaste<CR>
+imap <F1> <Esc>:set paste<CR>:r !pbpaste<CR>:set nopaste<CR>
+nmap <F2> :.w !pbcopy<CR><CR>
+vmap <F2> :w !pbcopy<CR><CR>
 
 let g:syntastic_quiet_messages = {
   \ "!level": "errors",
