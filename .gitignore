@@ -1,4 +1,7 @@
 # Ignore everything
+tags
+tags/
+**/tags/
 *
 
 # But not these files...

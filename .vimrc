@@ -58,6 +58,8 @@ map <leader>r :edit! <CR>
 map <leader>F gg=G
 map <leader>e :Explore <CR> 
 map <leader>H :e $MYVIMRC <CR>
+map <leader>N :NERDTreeToggle<CR>
+map <leader>p :CtrlPBuffer<CR>
 
 map <leader>C :%s/\s\+$// <CR>
 nnoremap <tab>   <c-w>w
