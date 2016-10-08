@@ -1,43 +1,130 @@
+" Stuff you could forget and will regret
+" r refresh NerdTree
+" R refresh NerdTree
+" Normal mode <Leader>__ toggle comment current line
+" Visual mode: 
+" comment/uncomment: selection + gc
 
+set nocompatible
+filetype off
 
 call plug#begin('~/.vim/plugged')
 
-" On-demand loading
+" file explorer
 Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
 
-"MY PLUGIN LIST"
+" useful defaults: backspace, insearch, listchars, scrolloff, runtime! matchit
 Plug 'tpope/vim-sensible'
-Plug 'altercation/vim-colors-solarized'
+
+" syntax checking plugin
 Plug 'scrooloose/syntastic'
+
+" Enahnce statusline/tabls in vim
+Plug 'vim-airline/vim-airline'
+
+" git wrapper
 Plug 'tpope/vim-fugitive'
+
+" fuzzy finder
 Plug 'kien/ctrlp.vim'
+
+" replace surroundings with another: 
+"  Press cs*' inside' *Hello world!* to change it to 'Hello world!'
 Plug 'tpope/vim-surround'
+
+" auto close surroundings (parentheses,brackets, quetes...)
 Plug 'Raimondi/delimitMate'
+
+" (Un)Comment code
+Plug 'tomtom/tcomment_vim'
+
+" configuration to edite and compile ruby files
 Plug 'vim-ruby/vim-ruby'
+
+" rails utils
 Plug 'tpope/vim-rails'
-Plug 'chriseppstein/vim-haml'
+
+" autocompletion of ruby do/begin/if-end blocks
 Plug 'tpope/vim-endwise'
-Plug 'osyo-manga/vim-monster'
+
+" ruby autocomplete
+" Plug 'osyo-manga/vim-monster'
+
+" auto-completion in vim
 Plug 'Shougo/neocomplete.vim'
+
+" highlighting match of matchit.vim.
 Plug 'vimtaku/hl_matchit.vim'
-Plug 'https://github.com/907th/vim-auto-save.git'
+
+" Management of tags files in Vim
+" Browse into functions vis <c-!>
 Plug 'ludovicchabant/vim-gutentags'
-Plug 'FelikZ/ctrlp-py-matcher'
+
+" snippet aliases
 Plug 'SirVer/ultisnips'
+
+" series of pre-defined snippets
 Plug 'honza/vim-snippets'
-Plug 'zenorocha/dracula-theme'
+
+" Use Ag to search via ctrlP
 Plug 'rking/ag.vim'
+
+" Navigation, rails specific highlighting, rails interface
+" :help rails-rake
+Plug 'tpope/vim-rails'
+
+" javascript syntax highligting and improved indentation
+Plug 'pangloss/vim-javascript'
+
+" Haml, Sass, SCSS syntax files
+Plug 'tpope/vim-haml'
+
+" displaying thin vertical lines at each indentation level for code indented
+" with spaces
+Plug 'Yggdroot/indentLine'
+
 call plug#end()
 
-set nocompatible          " We're running Vim, not Vi!
-syntax on                 " Enable syntax highlighting
-filetype plugin indent on " Enable filetype-specific indenting and plugins
-set number
+syntax on
+filetype plugin indent on    " required
+set t_Co=256
+colorscheme dracula
+
+
+
+" No backups
 set noswapfile
+set nobackup
+set nowritebackup
+
+" Encoding and stuff
+set termencoding=utf-8
+set encoding=utf-8
+set fileencoding=utf-8
+set fileformats=unix
+
+" Smart indentation
+set autoindent
+set smartindent
+set smarttab
+set shiftwidth=2
+set softtabstop=2
+set tabstop=2
+set expandtab
+
+" disable beep sounds
+set visualbell
+set noerrorbells
+
+set number
 set laststatus=2
-set ruler 
+
+" show current line and col in status bar
+set ruler
 set nostartofline
-set autoread "  Vim automatically refresh any unchanged files 
+
+" refresh every unchanded file
+set autoread
 set incsearch
 set showmatch
 set ignorecase
@@ -45,26 +132,84 @@ set smartcase
 set hlsearch
 set backspace=indent,eol,start
 
-runtime macros/matchit.vim
-let g:auto_save = 1  " enable AutoSave on Vim startup
-let g:auto_save_in_insert_mode = 0  " do not save while in insert mode
+set lazyredraw
+set ttyfast
 
-let ruby_operators = 1
-let ruby_space_errors = 1
+" show filename in status bar
+set title
 
+" Do not show vim welcome msg
+set shortmess=atI
+
+" adapt statusline using syntastic and fugative (git)
+set statusline=%<%f\ %{fugitive#statusline()}\ %h%m%r%=%-14.(%l,%c%V%)\ %P
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+
+" ignore files in control P
+set wildignore+=*/tmp/*,*.so,*.swp,*.zip     " MacOSX/Linux
+set wildignore+=*\\tmp\\*,*.swp,*.zip,*.exe  " Windows
+
+" configure syntastic plugin
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 0
+let g:syntastic_check_on_wq = 0
+let g:syntastic_quiet_messages = {
+  \ "!level": "errors",
+  \ "type": "style" }
+
+"Redefine finder via controlP: Use silversearcher (ag) and git
+let g:ctrlp_user_command = 'ag %s -l --nocolor --ignore ".git" --ignore "doc" --ignore "app/assets/images" --ignore "public" -g ""'
+let g:ctrlp_map = '<c-p>'
+let g:ctrlp_cmd = 'CtrlP'
 let mapleader="\<Space>"
-map <leader>b :Gblame <CR>
-map <leader>r :edit! <CR>
-map <leader>F gg=G
-map <leader>e :Explore <CR> 
-map <leader>H :e $MYVIMRC <CR>
-map <leader>N :NERDTreeToggle<CR>
-map <leader>p :CtrlPBuffer<CR>
+" set local working directory: neared ancestor that contains .git and the
+" directoy of the current file
+let g:ctrlp_working_path_mode = 'ra'
 
-map <leader>C :%s/\s\+$// <CR>
-nnoremap <tab>   <c-w>w
+let g:UltiSnipsExpandTrigger='<c-x>'
+let g:UltiSnipsJumpForwardTrigger='<c-b>'
+let g:UltiSnipsJumpBackwardTrigger='<c-z>'
+
+" javascript plugin
+let g:javascript_plugin_jsdoc = 1
+
+"MAPPINGS
+" toggle nerd tree
+map <C-n> :NERDTreeToggle<CR>
+
+" Open vimrc file
+map <Leader>H :e $MYVIMRC <CR>
+
+" jump to tab on the right
+nnoremap <tab> <c-w>w
+
+" jum to tab on the left
 nnoremap <S-tab> <c-w>W
-"nnoremap <c-¨> <c-]>
+
+" toggle git blame
+map <Leader>b :Gblame <CR>
+
+" Search for word under cursor
+nnoremap K :Ag! "<C-R><C-W>"<CR>
+
+" Search buffer
+map <Leader>p :CtrlPBuffer<CR>
+" " Browse Tags in current buffer
+map <Leader>t :CtrlPBufTag<CR>
+" " Browse Tags
+map <Leader>T :CtrlPTag<CR>
+" " Search models
+map <Leader>m :Emodel<space>"
+
+" Enable pretty line highlighting via <LEADER-c>
+hi CursorLine   cterm=NONE ctermbg=darkblue ctermfg=white guibg=darkred guifg=white
+nnoremap <Leader>c :set cursorline! <CR>
+
+" Clean file
+map <leader>C :%s/\s\+$// <CR>
 
 " <F1> pastes, but I have it configured so it works very well in insert mode 
 " and in normal mode. The nopaste setting makes sure that auto-indent 
@@ -77,100 +222,25 @@ imap <F1> <Esc>:set paste<CR>:r !pbpaste<CR>:set nopaste<CR>
 nmap <F2> :.w !pbcopy<CR><CR>
 vmap <F2> :w !pbcopy<CR><CR>
 
-let g:syntastic_quiet_messages = {
-  \ "!level": "errors",
-  \ "type": "style" }
 
-" Browse Tags in current buffer
-map <leader>t :CtrlPBufTag<CR>
+augroup testgroup
+" Clears autogroup if there is another testgroup
+autocmd!
+" Set persistent syntax highlighting for a given filetype.
+autocmd BufNewFile,BufRead *.fml set syntax=javascript
 
-" solarized options 
-let g:solarized_termcolors=256
-" colorscheme dracula-theme
-" color dracula-theme
-color Dracula
-" set background=dark
-
-set statusline=%<%f\ %{fugitive#statusline()}\ %h%m%r%=%-14.(%l,%c%V%)\ %P
-
-"syntastic"
-set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=%*
-
-"let g:vim_tags_auto_generate = 1
-"let g:vim_tags_use_language_field = 1
-
-" Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
-let g:ctrlp_user_command = 'ag %s -l --nocolor --ignore ".git" --ignore "doc" --ignore "app/assets/images" --ignore "public" -g ""'
-" ag is fast enough that CtrlP doesn't need to cache
-let g:ctrlp_use_caching = 0
+" Do not display DOS line-endings ^M (Windows)
+autocmd BufNew,BufEnter,BufRead,WinEnter *.fml match Ignore /\r$/
 
 
-
-"hl_matchit
-"" If this variable is set, augroup is defined, and start highlighting.
-let g:hl_matchit_enable_on_vim_startup = 1
-
-"" you can specify highlight group. see :highlight
-let g:hl_matchit_hl_groupname = 'Search'
-
-"" I recomend  g:hl_matchit_speed_level = 1 because highlight is
-"" just an addition.
-"" If 1 is set, sometimes do not highlight.
-let g:hl_matchit_speed_level = 2 " or 2
-
-"" you can specify use hl_matchit filetype.
-let g:hl_matchit_allow_ft = 'html,vim,sh' " blah..blah..
-" end hl_matchit
-
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
-let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 0
-"end syntastic"
-
-"autoreload script"
-let autoreadargs={'autoread':1} 
-
-"ctrlp vim"
-let g:ctrlp_map = '<c-p>'
-let g:ctrlp_cmd = 'CtrlP'
-let g:ctrlp_working_path_mode = 'ra'
-
-let g:ctrlp_match_func = { 'match': 'pymatcher#PyMatch' }
-
-set wildignore+=*/tmp/*,*.so,*.swp,*.zip     " MacOSX/Linux
-set wildignore+=*\\tmp\\*,*.swp,*.zip,*.exe  " Windows
-
-"end ctrlp vim"
-
-" Load matchit (% to bounce from do to end, etc.)
-runtime! macros/matchit.vim
-
-augroup myfiletypes
-  " Clear old autocmds in group
-  au FocusLost * :wa
-  au FileChangedShell * :e! 
-  autocmd FileType ruby compiler ruby
-  au FocusGained,BufEnter * :silent! !
-  au FocusLost,WinLeave * :silent! w
-  autocmd!
-  " autoindent with two spaces, always expand tabs
-  autocmd FileType ruby,eruby,yaml set ai sw=2 sts=2 et
 autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
 autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
 autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
 autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
 autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
 autocmd FileType ruby setlocal omnifunc=rubycomplete#Complete
+
 augroup END
-
-
-map! jk <Esc> " map ii to Esc
-
-"Latex Stuff
-filetype plugin on
 
 
 "*************************************************************************"
