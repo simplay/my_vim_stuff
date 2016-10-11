@@ -4,6 +4,9 @@
 " Normal mode <Leader>__ toggle comment current line
 " Visual mode: 
 " comment/uncomment: selection + gc
+" surround selection by pattern
+"   :s/.*/"&" will surround visual selection by \" \"
+" Within a rails app, use gf to lookup file
 
 set nocompatible
 filetype off
@@ -91,7 +94,6 @@ set t_Co=256
 colorscheme dracula
 
 
-
 " No backups
 set noswapfile
 set nobackup
@@ -118,6 +120,8 @@ set noerrorbells
 
 set number
 set laststatus=2
+
+set clipboard=unnamed
 
 " show current line and col in status bar
 set ruler
@@ -210,18 +214,6 @@ nnoremap <Leader>c :set cursorline! <CR>
 
 " Clean file
 map <leader>C :%s/\s\+$// <CR>
-
-" <F1> pastes, but I have it configured so it works very well in insert mode 
-" and in normal mode. The nopaste setting makes sure that auto-indent 
-" doesn't go crazy when you try to paste something in. 
-" <F2> copies text. If you are in normal mode, it will just grab the line your
-" working on. If you in visual mode however, it will grab all the selected
-" text. 
-nmap <F1> :set paste<CR>:r !pbpaste<CR>:set nopaste<CR>
-imap <F1> <Esc>:set paste<CR>:r !pbpaste<CR>:set nopaste<CR>
-nmap <F2> :.w !pbcopy<CR><CR>
-vmap <F2> :w !pbcopy<CR><CR>
-
 
 augroup testgroup
 " Clears autogroup if there is another testgroup
